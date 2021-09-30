@@ -25,7 +25,7 @@ const torus = new THREE.Mesh( geometry, material );
 scene.add(torus);
 
 const pointLight = new THREE.PointLight(0xECEFF4)
-pointLight.position.set(10,10,10)
+pointLight.position.set(30,30,30)
 scene.add(pointLight);
 
 const lightHelper = new THREE.PointLightHelper(pointLight)
@@ -44,9 +44,9 @@ const redLight = new THREE.PointLight(0xBF616A)
 const greenLight = new THREE.PointLight(0xA3BE8C)
 const blueLight = new THREE.PointLight(0x81A1C1)
 
-redLight.position.set(10,10,10)
-greenLight.position.set(10,10,10)
-blueLight.position.set(10,10,10)
+redLight.position.set(0,20,20)
+greenLight.position.set(20,0,20)
+blueLight.position.set(20,20,0)
 
 scene.add(redLight);
 scene.add(greenLight);
@@ -59,6 +59,48 @@ const blueHelper = new THREE.PointLightHelper(blueLight)
 scene.add(redHelper);
 scene.add(greenHelper);
 scene.add(blueHelper);
+
+
+function addStar() {
+  const geometry = new THREE.SphereGeometry(0.25, 24, 24);
+  const material = new THREE.MeshStandardMaterial( { color: 0xECEFF4 });
+  const star = new THREE.Mesh( geometry, material );
+
+  const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+
+  star.position.set(x, y, z);
+  scene.add(star)
+}
+
+Array(200).fill().forEach(addStar)
+
+const spaceTexture = new THREE.TextureLoader().load('space.jpg')
+scene.background = spaceTexture;
+
+// Avatar
+const jeffTexture = new THREE.TextureLoader().load('logo_1080x1080.png')
+
+const jeff = new THREE.Mesh(
+  new THREE.BoxGeometry(3,3,3),
+  new THREE.MeshBasicMaterial( { map: jeffTexture })
+);
+
+scene.add(jeff)
+
+// Moon
+const moonTexture = new THREE.TextureLoader().load('moon.jpg');
+const normalTexture = new THREE.TextureLoader().load('normal.jpg');
+
+const moon = new THREE.Mesh(
+  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.MeshStandardMaterial({
+    map: moonTexture,
+    normalMap: normalTexture
+  })
+);
+
+moon.position.setX(-20)
+scene.add(moon)
 
 
 // obj - your object (THREE.Object3D or derived)
@@ -92,11 +134,12 @@ function animate() {
   torus.rotation.y += 0.005;
   torus.rotation.z += 0.001;
 
+  controls.update();
 
   rotateAboutPoint(redLight, new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 0, 0), 0.01, true);
   rotateAboutPoint(greenLight, new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 1, 0), 0.02, true);
   rotateAboutPoint(blueLight, new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 1), 0.03, true);
-  rotateAboutPoint(pointLight, new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 1), 0.05, true);
+  rotateAboutPoint(pointLight, new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 0, 0), 0.05, true);
 
   renderer.render( scene, camera );
 }
