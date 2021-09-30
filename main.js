@@ -1,6 +1,10 @@
 import './style.css'
 
 import * as THREE from 'three';
+
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -29,6 +33,11 @@ scene.add(lightHelper);
 
 const ambientLight = new THREE.AmbientLight(0x4C566A)
 scene.add(ambientLight);
+
+const gridHelper = new THREE.GridHelper(200, 50)
+scene.add(gridHelper)
+
+const controls = new OrbitControls(camera, renderer.domElement);
 
 
 const redLight = new THREE.PointLight(0xBF616A)
