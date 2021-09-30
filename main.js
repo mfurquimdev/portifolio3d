@@ -22,6 +22,14 @@ scene.add(torus);
 
 const pointLight = new THREE.PointLight(0xECEFF4)
 pointLight.position.set(10,10,10)
+scene.add(pointLight);
+
+const lightHelper = new THREE.PointLightHelper(pointLight)
+scene.add(lightHelper);
+
+const ambientLight = new THREE.AmbientLight(0x4C566A)
+scene.add(ambientLight);
+
 
 const redLight = new THREE.PointLight(0xBF616A)
 const greenLight = new THREE.PointLight(0xA3BE8C)
@@ -31,10 +39,18 @@ redLight.position.set(10,10,10)
 greenLight.position.set(10,10,10)
 blueLight.position.set(10,10,10)
 
-//scene.add(pointLight);
 scene.add(redLight);
 scene.add(greenLight);
 scene.add(blueLight);
+
+const redHelper = new THREE.PointLightHelper(redLight)
+const greenHelper = new THREE.PointLightHelper(greenLight)
+const blueHelper = new THREE.PointLightHelper(blueLight)
+
+scene.add(redHelper);
+scene.add(greenHelper);
+scene.add(blueHelper);
+
 
 // obj - your object (THREE.Object3D or derived)
 // point - the point of rotation (THREE.Vector3)
@@ -71,7 +87,7 @@ function animate() {
   rotateAboutPoint(redLight, new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 0, 0), 0.01, true);
   rotateAboutPoint(greenLight, new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 1, 0), 0.02, true);
   rotateAboutPoint(blueLight, new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 1), 0.03, true);
-//  rotateAboutPoint(pointLight, new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 1), 0.1, true);
+  rotateAboutPoint(pointLight, new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 1), 0.05, true);
 
   renderer.render( scene, camera );
 }
